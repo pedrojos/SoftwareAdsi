@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 public class datos extends javax.swing.JFrame {
 
     aprendiz ap = new aprendiz(null, null, null, null, null, null, null, null, null, null, null);
+    static String est = null;
 
     /**
      * Creates new form datos
@@ -57,6 +58,7 @@ public class datos extends javax.swing.JFrame {
         rbtactivo = new javax.swing.JRadioButton();
         rbtinactivo = new javax.swing.JRadioButton();
         btnmodificar = new javax.swing.JButton();
+        btnexportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Adsi 35");
@@ -104,12 +106,22 @@ public class datos extends javax.swing.JFrame {
 
         btnguardar.setForeground(new java.awt.Color(0, 153, 0));
         btnguardar.setText("GUARDAR");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         btnconsultar.setForeground(new java.awt.Color(0, 153, 0));
         btnconsultar.setText("CONSULTAR");
 
         btneliminar.setForeground(new java.awt.Color(0, 153, 0));
         btneliminar.setText("ELIMINAR");
+        btneliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btneliminarActionPerformed(evt);
+            }
+        });
 
         cmbtipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-----------", "CEDULA", "TARJETA IDENTIDAD" }));
         cmbtipo.setToolTipText("");
@@ -146,6 +158,14 @@ public class datos extends javax.swing.JFrame {
         btnmodificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnmodificarActionPerformed(evt);
+            }
+        });
+
+        btnexportar.setForeground(new java.awt.Color(0, 153, 0));
+        btnexportar.setText("Exportar");
+        btnexportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnexportarActionPerformed(evt);
             }
         });
 
@@ -202,8 +222,13 @@ public class datos extends javax.swing.JFrame {
                                 .addComponent(txtweb, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(btnexportar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -264,7 +289,9 @@ public class datos extends javax.swing.JFrame {
                     .addComponent(btneliminar)
                     .addComponent(btnconsultar)
                     .addComponent(btnmodificar))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(btnexportar)
+                .addContainerGap())
         );
 
         pack();
@@ -283,26 +310,25 @@ public class datos extends javax.swing.JFrame {
 
     private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
         // TODO add your handling code here:
-        String est = null;
+
         if (rbtactivo.isSelected() == true) {
-            est = "ACTIVO";
+            est = "Activo";
         } else if (rbtinactivo.isSelected() == true) {
-            est = "INACTIVO";
+            est = "Inactivo";
         }
+        colocar();
 
-        ap = new aprendiz(cmbtipo.getSelectedItem().toString(), txtNum.getText(), txtnombre.getText(), txtapellido.getText(), txtnacimiento.getText(), txtdir.getText(), txttel.getText(), txtcel.getText(), txtcorreo.getText(), est, txtweb.getText());
-
-        int n = JOptionPane.showConfirmDialog(null, "Realmente Desea Eliminar Este Aprendiz?", "Verificacion", JOptionPane.YES_NO_OPTION);
+        int n = JOptionPane.showConfirmDialog(null, "Realmente Desea Modificar Este Aprendiz?", "Verificacion", JOptionPane.YES_NO_OPTION);
 
         if (n == JOptionPane.YES_OPTION) {
-             if (ap.upd() == 1) {
-            JOptionPane.showMessageDialog(null, "Datos Modificados");
-            ap = new aprendiz(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "No se modificaron los datos, por favor verifique el numero de identidad");
+            if (ap.upd() == 1) {
+                JOptionPane.showMessageDialog(null, "Datos Modificados");
+                ap = new aprendiz(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se modificaron los datos, por favor verifique el numero de identidad");
+            }
         }
-        }
-       
+
     }//GEN-LAST:event_btnmodificarActionPerformed
 
     private void txtNumKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumKeyReleased
@@ -327,10 +353,10 @@ public class datos extends javax.swing.JFrame {
                         txtdir.setText(ap.getAddress());
                         txtcorreo.setText(ap.getEmail());
                         txtweb.setText(ap.getPagperson());
-                        if (ap.getEstado().equals("Activo")) {
+                        if (ap.getEstado().trim().equals("Activo")) {
                             rbtactivo.setSelected(true);
-                        } else {
-                            rbtactivo.setSelected(true);
+                        } else if(ap.getEstado().trim().equals("Inactivo"))  {
+                            rbtinactivo.setSelected(true);
                         }
                     }
 
@@ -344,6 +370,82 @@ public class datos extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_txtNumKeyReleased
+
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        // TODO add your handling code here:
+        String estad = rbtinactivo.isSelected() ? "Inactivo" : "Activo";
+        aprendiz ap = new aprendiz(cmbtipo.getSelectedItem().toString(), txtNum.getText(), txtnombre.getText(), txtapellido.getText(), txtnacimiento.getText(), txtdir.getText(), txttel.getText(), txtcel.getText(), txtcorreo.getText(), estad, txtweb.getText());
+//          
+        if (ap.guardar("insert into datos values('" + ap.getTdoc() + "','" + ap.getNdoc() + "','" + ap.getName() + "','" + ap.getLastname() + "','" + ap.getFnac() + "','" + ap.getAddress() + "'," + "'" + ap.getTelephone() + "','" + ap.getCellphone() + "','" + ap.getEmail() + "','" + ap.getEstado() + "','" + ap.getPagperson() + "')")) {
+            JOptionPane.showMessageDialog(null, "Datos guardados");
+            limpiar();
+            ap = new aprendiz(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al guardar datos");
+        }
+    }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnexportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexportarActionPerformed
+        // TODO add your handling code here:
+        exportar excel = new exportar();
+        if (excel.verificarExistencia(ap.getAprendices())) {
+            excel.especificarRuta(this);
+            excel.crearHoja("adsi35", ap.getAprendices());
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay registros a exportar");
+        }
+    }//GEN-LAST:event_btnexportarActionPerformed
+
+    private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
+        // TODO add your handling code here:
+        try {
+
+            if (txtNum.getText() != null) {
+                ap.buscar(Integer.parseInt(txtNum.getText()));
+                if (ap.getName() != null) {
+                    if (ap.getTdoc().trim().equals("Cedula") || ap.getTdoc().trim().equals("CEDULA")) {
+                        cmbtipo.setSelectedIndex(1);
+                    } else {
+                        cmbtipo.setSelectedIndex(2);
+                    }
+
+                    txtnacimiento.setText(ap.getFnac());
+                    txtnombre.setText(ap.getName());
+                    txtapellido.setText(ap.getLastname());
+                    txttel.setText(ap.getTelephone());
+                    txtcel.setText(ap.getCellphone());
+                    txtdir.setText(ap.getAddress());
+                    txtcorreo.setText(ap.getEmail());
+                    txtweb.setText(ap.getPagperson());
+                    if (ap.getEstado().equals("Activo")) {
+                        rbtactivo.setSelected(true);
+                    } else {
+                        rbtinactivo.setSelected(true);
+                    }
+
+                        //Determinamos si eliminamos o no el registro
+                    int n = JOptionPane.showConfirmDialog(null, "Realmente Desea Eliminar Este Aprendiz?", "Verificacion", JOptionPane.YES_NO_OPTION);
+                    if (n == JOptionPane.YES_OPTION) {
+                        String consu = ("update datos set ESTADO='Inactivo' where N_DOCUMENTO=" + txtNum.getText() + "");
+                        
+                        if (ap.Eliminar(consu) == 1) {
+                            JOptionPane.showMessageDialog(null, "Aprendiz Inhabilitado Con Exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
+                            limpiar();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No Se Pudo Inhabilitar El Aprendiz, Por Favor Intente Nuevamente", "Error", JOptionPane.PLAIN_MESSAGE);
+                        }
+                    }
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Por favor ingrese el numero de identificación");
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Error en frm datos \n" + ex.getMessage());
+        }
+
+    }//GEN-LAST:event_btneliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -380,12 +482,43 @@ public class datos extends javax.swing.JFrame {
         });
     }
 
+    public void colocar() {
+        ap.setTdoc(cmbtipo.getSelectedItem().toString());
+        ap.setNdoc(txtNum.getText().trim());
+        ap.setName(txtnombre.getText());
+        ap.setLastname(txtapellido.getText());
+        ap.setFnac(txtnacimiento.getText());
+        ap.setAddress(txtdir.getText());
+        ap.setTelephone(txttel.getText());
+        ap.setCellphone(txtcel.getText());
+        ap.setEmail(txtcorreo.getText());
+        ap.setEstado(est);
+        ap.setPagperson(txtweb.getText());
+    }
+
+    public void limpiar() {
+        //txtNum.setFocusable(true);
+        txtNum.requestFocus();
+        txtNum.setText("");
+        txtnombre.setText("");
+        txtapellido.setText("");
+        txtnacimiento.setText("");
+        txtdir.setText("");
+        txttel.setText("");
+        txtcel.setText("");
+        txtcorreo.setText("");
+        txtweb.setText("");
+        cmbtipo.setSelectedIndex(0);
+        Estado.clearSelection();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.ButtonGroup Estado;
     private javax.swing.JLabel Numero;
     private javax.swing.JLabel ape;
     private javax.swing.JButton btnconsultar;
     private javax.swing.JButton btneliminar;
+    private javax.swing.JButton btnexportar;
     private javax.swing.JButton btnguardar;
     private javax.swing.JButton btnmodificar;
     private javax.swing.JLabel celular;

@@ -1,6 +1,11 @@
 package software;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -110,8 +115,48 @@ class aprendiz {
         }
 
     }
-    
-    public void vaciar(){
+
+    public boolean guardar(String sql) {
+        Conexion c = new Conexion("mysql", "com.mysql.jdbc.Driver", "localhost", "adsi35", "root", "1234");
+        Connection conex = c.conectar();
+        boolean resultado = false;
+        try {
+            Statement st = (Statement) conex.createStatement();
+            st.execute(sql);
+            resultado = true;
+        } catch (SQLException ex) {
+            System.out.println("Error en metodo guardar \n" + ex.getMessage());
+        }
+        conex = null;
+        c.desconectar();
+        return resultado;
+    }
+
+    //METODO ELIMINAR
+    public int Eliminar(String sql) {
+        Connection conex;
+        Conexion obj = new Conexion("mysql", "com.mysql.jdbc.Driver", "localhost", "Adsi35", "root", "1234");
+        conex = obj.conectar();
+        Statement sentencia;
+        try {
+            sentencia = conex.createStatement();
+            sentencia.execute(sql);
+            obj.desconectar();
+            return 1;
+        } catch (SQLException ex) {
+            System.out.println("Error al Guardar en la BD " + ex.getMessage());
+            obj.desconectar();
+            return 2;
+        }
+        
+        
+    }
+
+    public ArrayList<aprendiz> getAprendices() {
+        return vec;
+    }
+
+    public void vaciar() {
         this.tdoc = null;
         this.ndoc = null;
         this.fnac = null;
@@ -123,6 +168,10 @@ class aprendiz {
         this.email = null;
         this.estado = null;
         this.pagperson = null;
+    }
+
+    public void refreh() {
+
     }
 
     public String getNdoc() {
@@ -168,9 +217,8 @@ class aprendiz {
     public String getEstado() {
         return estado;
     }
-    
-    //_______________________________________________________________SETTER
 
+    //_______________________________________________________________SETTER
     public void setNdoc(String ndoc) {
         this.ndoc = ndoc;
     }
@@ -214,6 +262,5 @@ class aprendiz {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-}
 
+}
