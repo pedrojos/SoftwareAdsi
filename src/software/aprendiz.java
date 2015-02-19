@@ -168,4 +168,52 @@ class aprendiz {
     public String getEstado() {
         return estado;
     }
+    
+    //_______________________________________________________________SETTER
+
+    public void setNdoc(String ndoc) {
+        this.ndoc = ndoc;
+    }
+
+    public void setTdoc(String tdoc) {
+        this.tdoc = tdoc;
+    }
+
+    public void setFnac(String fnac) {
+        this.fnac = fnac;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPagperson(String pagperson) {
+        this.pagperson = pagperson;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
 }
+
