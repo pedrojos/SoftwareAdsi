@@ -323,7 +323,7 @@ public class datos extends javax.swing.JFrame {
         if (n == JOptionPane.YES_OPTION) {
             if (ap.upd() == 1) {
                 JOptionPane.showMessageDialog(null, "Datos Modificados");
-                ap = new aprendiz(true);
+                ap.refreh();
             } else {
                 JOptionPane.showMessageDialog(null, "No se modificaron los datos, por favor verifique el numero de identidad");
             }
@@ -379,7 +379,7 @@ public class datos extends javax.swing.JFrame {
         if (ap.guardar("insert into datos values('" + ap.getTdoc() + "','" + ap.getNdoc() + "','" + ap.getName() + "','" + ap.getLastname() + "','" + ap.getFnac() + "','" + ap.getAddress() + "'," + "'" + ap.getTelephone() + "','" + ap.getCellphone() + "','" + ap.getEmail() + "','" + ap.getEstado() + "','" + ap.getPagperson() + "')")) {
             JOptionPane.showMessageDialog(null, "Datos guardados");
             limpiar();
-            ap = new aprendiz(true);
+            ap.refreh();
         } else {
             JOptionPane.showMessageDialog(null, "Error al guardar datos");
         }
@@ -431,6 +431,7 @@ public class datos extends javax.swing.JFrame {
                         if (ap.Eliminar(consu) == 1) {
                             JOptionPane.showMessageDialog(null, "Aprendiz Inhabilitado Con Exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
                             limpiar();
+                            ap.refreh();
                         } else {
                             JOptionPane.showMessageDialog(null, "No Se Pudo Inhabilitar El Aprendiz, Por Favor Intente Nuevamente", "Error", JOptionPane.PLAIN_MESSAGE);
                         }
