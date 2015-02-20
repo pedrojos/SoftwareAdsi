@@ -17,6 +17,7 @@ public class datos extends javax.swing.JFrame {
      */
     public datos() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -59,6 +60,7 @@ public class datos extends javax.swing.JFrame {
         rbtinactivo = new javax.swing.JRadioButton();
         btnmodificar = new javax.swing.JButton();
         btnexportar = new javax.swing.JButton();
+        btnagenda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Adsi 35");
@@ -169,6 +171,14 @@ public class datos extends javax.swing.JFrame {
             }
         });
 
+        btnagenda.setForeground(new java.awt.Color(0, 153, 0));
+        btnagenda.setText("Agenda");
+        btnagenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnagendaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -227,7 +237,9 @@ public class datos extends javax.swing.JFrame {
                         .addGap(92, 92, 92)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
+                        .addContainerGap()
+                        .addComponent(btnagenda, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
                         .addComponent(btnexportar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -289,9 +301,11 @@ public class datos extends javax.swing.JFrame {
                     .addComponent(btneliminar)
                     .addComponent(btnconsultar)
                     .addComponent(btnmodificar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(btnexportar)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnexportar)
+                    .addComponent(btnagenda))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -337,6 +351,7 @@ public class datos extends javax.swing.JFrame {
             try {
 
                 if (txtNum.getText() != null) {
+                    //CONSULTAMOS
                     ap.buscar(Integer.parseInt(txtNum.getText()));
                     if (ap.getName() != null) {
                         if (ap.getTdoc().trim().equals("Cedula") || ap.getTdoc().trim().equals("CEDULA")) {
@@ -358,6 +373,8 @@ public class datos extends javax.swing.JFrame {
                         } else if(ap.getEstado().trim().equals("Inactivo"))  {
                             rbtinactivo.setSelected(true);
                         }
+                    }else{
+                        limpiar2();
                     }
 
                 } else {
@@ -448,6 +465,12 @@ public class datos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btneliminarActionPerformed
 
+    private void btnagendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagendaActionPerformed
+        // TODO add your handling code here:
+        VistaAgenda abrirAgenda = new VistaAgenda();
+        abrirAgenda.setVisible(true);
+    }//GEN-LAST:event_btnagendaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -512,11 +535,25 @@ public class datos extends javax.swing.JFrame {
         cmbtipo.setSelectedIndex(0);
         Estado.clearSelection();
     }
+    public void limpiar2(){
+        txtNum.requestFocus();
+        txtnombre.setText("");
+        txtapellido.setText("");
+        txtnacimiento.setText("");
+        txtdir.setText("");
+        txttel.setText("");
+        txtcel.setText("");
+        txtcorreo.setText("");
+        txtweb.setText("");
+        cmbtipo.setSelectedIndex(0);
+        Estado.clearSelection();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.ButtonGroup Estado;
     private javax.swing.JLabel Numero;
     private javax.swing.JLabel ape;
+    private javax.swing.JButton btnagenda;
     private javax.swing.JButton btnconsultar;
     private javax.swing.JButton btneliminar;
     private javax.swing.JButton btnexportar;

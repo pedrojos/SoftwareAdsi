@@ -44,6 +44,34 @@ class aprendiz {
 
     }
 
+    public void refreh() {
+          Conexion obj = new Conexion("mysql", "com.mysql.jdbc.Driver", "localhost", "Adsi35", "root", "1234");
+
+            Object[][] datos;
+            String campos = "TIPO_DOCUMENTO,N_DOCUMENTO, NOMBRE, APELLIDO,FECHA_NACIMIENTO,DIRECCION,TELEFONO,CELULAR,CORREO,ESTADO,PAGINA_PERSONAL";
+            datos = obj.consulta("datos", campos, null);
+            if (datos.length > 0) {
+                System.out.println("Datos obtenidos");
+                for (int i = 0; i < datos.length; i++) {
+                    this.tdoc = datos[i][0].toString();
+                    this.ndoc = datos[i][1].toString();
+                    this.name = datos[i][2].toString();
+                    this.lastname = datos[i][3].toString();
+                    this.fnac = datos[i][4].toString();
+                    this.address = datos[i][5].toString();
+                    this.telephone = datos[i][6].toString();
+                    this.cellphone = datos[i][7].toString();
+                    this.email = datos[i][8].toString();
+                    this.estado = datos[i][9].toString();
+                    this.pagperson = datos[i][10].toString();
+
+                    vec.add(new aprendiz(this.tdoc, this.ndoc, this.name, this.lastname, this.fnac, this.address, this.telephone, this.cellphone, this.email, this.estado, this.pagperson));
+                }
+
+            }
+            obj.desconectar();
+    }
+    
     public int upd() {
         Conexion obj = new Conexion("mysql", "com.mysql.jdbc.Driver", "localhost", "Adsi35", "root", "1234");
         Object[] vect1 = {this.tdoc, this.name, this.lastname, this.fnac, this.address, this.telephone, this.cellphone, this.email, this.estado, this.pagperson, this.ndoc}; //GUARDA LOS VALORES QUE SE LE ASIGNARAN A LOS CAMPOS
@@ -73,7 +101,9 @@ class aprendiz {
                     this.email = vec.get(i).email;
                     this.estado = vec.get(i).estado;
                     this.pagperson = vec.get(i).pagperson;
-
+                    break;
+                }else{
+                    vaciar();
                 }
             }
 
@@ -81,6 +111,29 @@ class aprendiz {
             System.out.println("Error en operación modificar \n" + ex.getMessage());
         }
 
+    }
+    public Object[][] cargar(){
+        Object[][] data = new Object[vec.size()][11];
+        try {
+            for (int i = 0; i < vec.size(); i++) {
+                data[i][0] = vec.get(i).tdoc;
+                data[i][1] = vec.get(i).ndoc;
+                data[i][2] = vec.get(i).name;
+                data[i][3] = vec.get(i).lastname;
+                data[i][4] = vec.get(i).fnac;
+                data[i][5] = vec.get(i).address;
+                data[i][6] = vec.get(i).telephone;
+                data[i][7] = vec.get(i).cellphone;
+                data[i][8] = vec.get(i).email;
+                data[i][9] = vec.get(i).estado;
+                data[i][10] = vec.get(i).pagperson;
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Error en metodo cargar \n" + ex.getMessage());
+        }
+        
+        return data;
     }
 
     public boolean guardar(String sql) {
@@ -123,35 +176,6 @@ class aprendiz {
         return vec;
     }
 
- 
-
-    public void refreh() {
-          Conexion obj = new Conexion("mysql", "com.mysql.jdbc.Driver", "localhost", "Adsi35", "root", "1234");
-
-            Object[][] datos;
-            String campos = "TIPO_DOCUMENTO,N_DOCUMENTO, NOMBRE, APELLIDO,FECHA_NACIMIENTO,DIRECCION,TELEFONO,CELULAR,CORREO,ESTADO,PAGINA_PERSONAL";
-            datos = obj.consulta("datos", campos, null);
-            if (datos.length > 0) {
-                System.out.println("Datos obtenidos");
-                for (int i = 0; i < datos.length; i++) {
-                    this.tdoc = datos[i][0].toString();
-                    this.ndoc = datos[i][1].toString();
-                    this.name = datos[i][2].toString();
-                    this.lastname = datos[i][3].toString();
-                    this.fnac = datos[i][4].toString();
-                    this.address = datos[i][5].toString();
-                    this.telephone = datos[i][6].toString();
-                    this.cellphone = datos[i][7].toString();
-                    this.email = datos[i][8].toString();
-                    this.estado = datos[i][9].toString();
-                    this.pagperson = datos[i][10].toString();
-
-                    vec.add(new aprendiz(this.tdoc, this.ndoc, this.name, this.lastname, this.fnac, this.address, this.telephone, this.cellphone, this.email, this.estado, this.pagperson));
-                }
-
-            }
-            obj.desconectar();
-    }
     
      public void vaciar() {
         this.tdoc = null;
