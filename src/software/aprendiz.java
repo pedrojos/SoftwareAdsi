@@ -43,34 +43,6 @@ class aprendiz {
     }
 
     public aprendiz(boolean ob) {
-        if (ob == true) {
-
-            Conexion obj = new Conexion("mysql", "com.mysql.jdbc.Driver", "localhost", "Adsi35", "root", "1234");
-
-            Object[][] datos;
-            String campos = "TIPO_DOCUMENTO,N_DOCUMENTO, NOMBRE, APELLIDO,FECHA_NACIMIENTO,DIRECCION,TELEFONO,CELULAR,CORREO,ESTADO,PAGINA_PERSONAL";
-            datos = obj.consulta("datos", campos, null);
-            if (datos.length > 0) {
-                System.out.println("Datos obtenidos");
-                for (int i = 0; i < datos.length; i++) {
-                    this.tdoc = datos[i][0].toString();
-                    this.ndoc = datos[i][1].toString();
-                    this.name = datos[i][2].toString();
-                    this.lastname = datos[i][3].toString();
-                    this.fnac = datos[i][4].toString();
-                    this.address = datos[i][5].toString();
-                    this.telephone = datos[i][6].toString();
-                    this.cellphone = datos[i][7].toString();
-                    this.email = datos[i][8].toString();
-                    this.estado = datos[i][9].toString();
-                    this.pagperson = datos[i][10].toString();
-
-                    vec.add(new aprendiz(this.tdoc, this.ndoc, this.name, this.lastname, this.fnac, this.address, this.telephone, this.cellphone, this.email, this.estado, this.pagperson));
-                }
-
-            }
-            obj.desconectar();
-        }
 
     }
 
@@ -87,9 +59,6 @@ class aprendiz {
 
     }
 
-    public void data() {
-
-    }
 
     public void buscar(int num) {
         try {
@@ -171,7 +140,31 @@ class aprendiz {
     }
 
     public void refreh() {
+          Conexion obj = new Conexion("mysql", "com.mysql.jdbc.Driver", "localhost", "Adsi35", "root", "1234");
 
+            Object[][] datos;
+            String campos = "TIPO_DOCUMENTO,N_DOCUMENTO, NOMBRE, APELLIDO,FECHA_NACIMIENTO,DIRECCION,TELEFONO,CELULAR,CORREO,ESTADO,PAGINA_PERSONAL";
+            datos = obj.consulta("datos", campos, null);
+            if (datos.length > 0) {
+                System.out.println("Datos obtenidos");
+                for (int i = 0; i < datos.length; i++) {
+                    this.tdoc = datos[i][0].toString();
+                    this.ndoc = datos[i][1].toString();
+                    this.name = datos[i][2].toString();
+                    this.lastname = datos[i][3].toString();
+                    this.fnac = datos[i][4].toString();
+                    this.address = datos[i][5].toString();
+                    this.telephone = datos[i][6].toString();
+                    this.cellphone = datos[i][7].toString();
+                    this.email = datos[i][8].toString();
+                    this.estado = datos[i][9].toString();
+                    this.pagperson = datos[i][10].toString();
+
+                    vec.add(new aprendiz(this.tdoc, this.ndoc, this.name, this.lastname, this.fnac, this.address, this.telephone, this.cellphone, this.email, this.estado, this.pagperson));
+                }
+
+            }
+            obj.desconectar();
     }
 
     public String getNdoc() {
