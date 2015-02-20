@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -41,7 +39,7 @@ class aprendiz {
         this.estado = est;
         this.pagperson = pagina;
     }
-
+    //CONSTRUCTOR 2
     public aprendiz(boolean ob) {
 
     }
@@ -125,19 +123,7 @@ class aprendiz {
         return vec;
     }
 
-    public void vaciar() {
-        this.tdoc = null;
-        this.ndoc = null;
-        this.fnac = null;
-        this.name = null;
-        this.lastname = null;
-        this.address = null;
-        this.telephone = null;
-        this.cellphone = null;
-        this.email = null;
-        this.estado = null;
-        this.pagperson = null;
-    }
+ 
 
     public void refreh() {
           Conexion obj = new Conexion("mysql", "com.mysql.jdbc.Driver", "localhost", "Adsi35", "root", "1234");
@@ -165,6 +151,20 @@ class aprendiz {
 
             }
             obj.desconectar();
+    }
+    
+     public void vaciar() {
+        this.tdoc = null;
+        this.ndoc = null;
+        this.fnac = null;
+        this.name = null;
+        this.lastname = null;
+        this.address = null;
+        this.telephone = null;
+        this.cellphone = null;
+        this.email = null;
+        this.estado = null;
+        this.pagperson = null;
     }
 
     public String getNdoc() {
