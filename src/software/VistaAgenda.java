@@ -12,7 +12,7 @@ import javax.swing.table.TableModel;
 
 /**
  *
- * @author sena
+ * @author sena/
  */
 public class VistaAgenda extends javax.swing.JFrame {
 
