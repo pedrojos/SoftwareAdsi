@@ -20,9 +20,9 @@ public class SOFTWARE {
         //EJEMPLO NEW CONEXION ("MOTOR DE BD", "NOMBRE DRIVER", "SERVIDOR", "NOMBRE BD", "USUARIO", "PASSWORD")
         // Conexion obj = new Conexion("mysql", "com.mysql.jdbc.Driver","localhost", "Adsi35", "root", "toor");
         try {
-            ap.data();
+            ap.refreh();
         } catch (Exception ex) {
-            System.out.println("Error data \n" + ex.getMessage());
+            System.out.println("Error al llmar a refreh \n" + ex.getMessage());
         }
         
         datos.main(args);
