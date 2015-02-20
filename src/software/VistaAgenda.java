@@ -8,6 +8,8 @@ package software;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -19,6 +21,7 @@ public class VistaAgenda extends javax.swing.JFrame {
     aprendiz ap = new aprendiz(true);
     DefaultTableModel mt;
     Object[][] datos;
+    int[] tamaño = {105,95,150,150,90,180,70,90,200,60,200};
     String[] titulos = {"Tipo Documento", "Numero", "Nombres", "Apellidos", "F.Nacimiento", "Direccioón", "Teléfono", "Celular", "Correo", "Estado", "WebSite"};
 
     /**
@@ -26,17 +29,27 @@ public class VistaAgenda extends javax.swing.JFrame {
      */
     public VistaAgenda() {
         initComponents();
+          jtbldatos.setDefaultRenderer(Object.class,new  TableCellRendererColor());
+        
+        
+        
         this.setLocationRelativeTo(null);
         //ap.refreh();
         datos = ap.cargar();
-        mt = new DefaultTableModel(datos, titulos){
+        jtbldatos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        mt = new DefaultTableModel(datos, titulos) {
             @Override
             public boolean isCellEditable(int row, int col) {
                 return false;
             }
 
         };
+        TableColumnModel columna = jtbldatos.getColumnModel();
         jtbldatos.setModel(mt);
+        //eESTABLECEMOS EL ANCHO DE LAS COLUMNAS
+        for (int i = 0; i < columna.getColumnCount(); i++) {
+            columna.getColumn(i).setPreferredWidth(tamaño[i]);
+        }
     }
 
     /**
@@ -82,7 +95,7 @@ public class VistaAgenda extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Agenda Adsi");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
